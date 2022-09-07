@@ -19,7 +19,7 @@
                     <td>Moha3882</td>
                     <td>
                         <a href="#" class="btn-secondary">Update Admin</a> 
-                        <a href="#" class="btn-danger">Delete Admin</a> 
+                        <a href="<?php echo SITEURL ?>admin/delete-category.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Admin</a> 
                         
                     </td>
                 </tr>
