@@ -105,7 +105,7 @@ table tr td{
 /* Login CSS */
 .login{
     border:1px solid gray;
-    width: 20%;
-    margin: 10% auto;
+    max-width:fit-content;
+    margin: 20% auto;
     padding: 2%;
 }
