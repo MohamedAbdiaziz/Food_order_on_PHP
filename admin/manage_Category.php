@@ -2,47 +2,115 @@
 <div class="menu-content">
     <div class="wrapper">
         <h1>Manage Category</h1>
-        <br><br>
+        <?php
+            if (isset($_SESSION['add_category'])) {
+                echo $_SESSION['add_category'];
+                unset ($_SESSION['add_category']);
+            }
+             if (isset($_SESSION['noget'])) {
+                echo $_SESSION['noget'];
+                unset ($_SESSION['noget']);
+            }
+             if (isset($_SESSION['queryfailed'])) {
+                echo $_SESSION['queryfailed'];
+                unset ($_SESSION['queryfailed']);
+            }
+            if (isset($_SESSION['delete-category'])) {
+                echo $_SESSION['delete-category'];
+                unset ($_SESSION['delete-category']);
+            }
+        ?>
+        <br><br><?php
+            if (isset($_SESSION['add_category'])) {
+                echo $_SESSION['add_category'];
+                unset ($_SESSION['add_category']);
+            }
+             if (isset($_SESSION['noget'])) {
+                echo $_SESSION['noget'];
+                unset ($_SESSION['noget']);
+            }
+             if (isset($_SESSION['queryfailed'])) {
+                echo $_SESSION['queryfailed'];
+                unset ($_SESSION['queryfailed']);
+            }
+            if (isset($_SESSION['delete-category'])) {
+                echo $_SESSION['delete-category'];
+                unset ($_SESSION['delete-category']);
+            }
+        ?>
            
-            <a href="#" class="btn-primary">Add Category</a>
+            <a href="<?php echo SITEURL; ?>admin/add-category.php" class="btn-primary">Add Category</a>
             <br><br>
             <table class="tbl-full">
                 <tr>
                     <th>S.N.</th>
-                    <th>Full Name</th>
-                    <th>Username</th>
+                    <th>Title</th>
+                    <th>Images</th>
+                    <th>Feature</th>
+                    <th>Active</th>
                     <th>Action</th>
                 </tr>
-                <tr>
-                    <td>1. </td>
-                    <td>Mohamed Abdiaziz</td>
-                    <td>Moha3882</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a> 
-                        <a href="<?php echo SITEURL ?>admin/delete-category.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Admin</a> 
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>2. </td>
-                    <td>Mohamed Abdiaziz</td>
-                    <td>Moha3882</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a> 
-                        <a href="#" class="btn-danger">Delete Admin</a> 
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>3. </td>
-                    <td>Mohamed Abdiaziz</td>
-                    <td>Moha3882</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a> 
-                        <a href="#" class="btn-danger">Delete Admin</a> 
-                        
-                    </td>
-                </tr>
+                <?php 
+                    
+                    $sql = "SELECT * FROM tbl_category";
+                    $res = mysqli_query($conn, $sql);
+                    if ($res == true) {
+                        // code...
+                        $count = mysqli_num_rows($res);
+                        if ($count >0) {
+                            $S_N = 1;
+                            // code...
+                            while($rows = mysqli_fetch_assoc($res)){
+                                $id = $rows['id'];
+                                $title = $rows['title'];
+                                $image = $rows['image_name'];
+                                $featured = $rows['featured'];
+                                $active = $rows['active'];
+                                ?>
+                                    <tr>
+                                        <td> <?php echo $S_N++; ?> </td>
+                                        <td><?php echo $title; ?></td>
+                                        <td>
+                                            <?php 
+                                                if ($image == "") {
+                                                    // code...
+                                                    echo "<div class='error'>No image</div>";
+                                                }
+                                                else{
+                                                    ?>
+
+                                                    <img src="../images/category/<?php echo $image; ?>" width="100px">
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $featured; ?></td>
+                                        <td> <?php echo $active; ?> </td>
+                                        <td>
+                                            <a href="#" class="btn-secondary">Update Admin</a> 
+                                            <a href="<?php echo SITEURL ?>admin/delete-category.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Admin</a> 
+                                            
+                                        </td>
+                                    </tr>
+
+
+                                <?php
+                            }
+                        }
+                        else{
+                            ?>
+                            <tr>
+                                <td colspan="6" class="error">no category found!!!!</td>
+                            </tr>
+                            <?php
+                        }
+                    }
+
+
+                ?>
+
+
+                
             </table>
     </div>
 </div>
