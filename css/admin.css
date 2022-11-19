@@ -10,6 +10,7 @@
     margin: 0 auto;
 }
 
+
 .text-center{
     text-align: center;
 }
@@ -46,6 +47,7 @@
     margin: 1%;
     padding: 2%;
     float: left;
+    box-shadow: inset rgba(red, green, blue, 0.2);
 }
 .clear-fix{
     font: none;
@@ -93,7 +95,8 @@ table tr td{
     background: #fa3737;
 }
 .tbl-30{
-    width: 30%;
+    width: 40%;
+
 }
 .success{
     color:#2ed573;
@@ -106,6 +109,35 @@ table tr td{
 .login{
     border:1px solid gray;
     max-width:fit-content;
-    margin: 20% auto;
+    margin-top: 5%;
+    margin-left: 5%;
+    /* margin: 5%  auto; */
     padding: 2%;
+}
+
+.font_size{
+    table-layout: fixed;
+    width: 100%;
+}
+
+
+
+
+
+
+
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: grey;
+    font-size: 16px;
+}
+
+/*-------------------------------------------*/
+.right{
+    
+    text-align: center;
 }

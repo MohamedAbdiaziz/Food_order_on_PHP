@@ -5,20 +5,30 @@
         <br/>
         <br/>
         <?php 
+        if(isset($_GET['id'])){
             $id = $_GET['id'];
+        }
+        else{
+            $div = "<div class='error'>";
+            $cdiv = "</div>";
+            $_SESSION['change-password'] = "$div sorry select only  $cdiv";
+            header('location:'.SITEURL.'admin/manage_admin.php');
+        }
+            
 
         ?>
         <?php 
             if(isset($_POST['submit'])){
-                $id = $_POST['id'];
+                $id = $id;
                 $old_password = md5($_POST['old_password']);
                 $new_password = md5($_POST['new_password']);
                 $confirm_password = md5($_POST['confirm_password']);
                 
-                $sql = "SELECT * FROM tbl_admin WHERE ID = '$id' AND Password = '$new_password' ";
+                $sql = "SELECT * FROM tbl_admin WHERE ID = '$id'";
                 $res = mysqli_query($conn, $sql);
                 if($res == true){
-                    if ($new_password == $confirm_password) {
+                    $rows = mysqli_fetch_assoc($res);
+                    if ($new_password == $confirm_password and $old_password==$db_pass = $rows['Password']) {
                         $sql2 = "UPDATE tbl_admin set Password='$new_password' where ID = '$id'";
                         $res2 = mysqli_query($conn, $sql2);
                         if ($res2 = TRUE) {
@@ -34,7 +44,18 @@
                         
                     }
                     else{
-                        echo "<div class='error'>Password not match. Try Again.</div>";
+                        if($new_password != $confirm_password){
+                            if($old_password!=$db_pass = $rows['Password']){
+                                echo "<div class='error'>Old Passwor is Wrong<br/> And Password not match. Try Again.</div>";
+                            }
+                            else{
+                                echo "<div class='error'>Password not match. Try Again.</div>";
+                            }
+                            
+                        }else{
+                            echo "<div class='error'>Old Password is wrong.</div>";
+                        }
+                        
                     }
                 }
                 else{

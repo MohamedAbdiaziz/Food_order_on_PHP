@@ -1,4 +1,5 @@
-<?php include('partials/menu.php') ?>
+<?php include('partials/menu.php');
+?>
 
     <!-- menu-content section -->
     <div class="menu-content">
@@ -34,7 +35,19 @@
                 }
             ?>
            <br /> <br/>
-            <a href="add-admin.php" class="btn-primary">Add Admin</a>
+           <?php
+                $user2 = $_SESSION['user'];
+                $sql4 = "SELECT * FROM tbl_admin WHERE Username='$user2'";
+                $res4 = mysqli_query($conn, $sql4);
+                $rows3 = mysqli_fetch_assoc($res4);
+                $role2 = $rows3['Role'];
+                if ($role2 == "Manager") {
+                    ?>
+                        <a href="add-admin.php" class="btn-primary">Add Admin</a>
+                        <?php
+                    }
+           ?>
+            
             <br><br>
             <table class="tbl-full">
                 <tr>
@@ -46,7 +59,21 @@
 
 
                 <?php
-                    $sql = "SELECT * FROM tbl_admin";
+                if(isset($_SESSION['user'])){
+                    $user1 = $_SESSION['user'];
+                    $sql3 = "SELECT * FROM tbl_admin WHERE Username='$user1'";
+                    $res3 = mysqli_query($conn, $sql3);
+                    $rows2 = mysqli_fetch_assoc($res3);
+                    $role1 = $rows2['Role'];
+                    if ($role1 == "Manager") {
+                        $sql = "SELECT * FROM tbl_admin";
+                    }
+                    else{
+                        $sql = "SELECT * FROM tbl_admin WHERE Username = '$user1'";
+                    }
+                                                    
+                }
+                    
                     $res = mysqli_query($conn, $sql);
                     if($res == TRUE){
                         $count = mysqli_num_rows($res);
@@ -63,8 +90,36 @@
                                         <td><?php echo $username; ?></td>
                                         <td>
                                             <a href="<?php echo SITEURL; ?>admin/update_password-admin.php?id=<?php echo $id; ?>" class="btn-primary">Change Password</a>
-                                            <a href="<?php echo SITEURL; ?>admin/update-admin.php?id=<?php echo $id; ?>" class="btn-secondary">Update Admin</a> 
-                                            <a href="<?php echo SITEURL; ?>admin/delete-admin.php?id=<?php echo $id; ?>" class="btn-danger">Delete Admin</a> 
+                                            <?php 
+                                                if(isset($_SESSION['user'])){
+                                                    $user = $_SESSION['user'];
+                                                    $sql2 = "SELECT * FROM tbl_admin WHERE Username='$user'";
+                                                    $res2 = mysqli_query($conn, $sql2);
+                                                    $rows2 = mysqli_fetch_assoc($res2);
+                                                    $role = $rows2['Role'];
+                                                    if ($role == "Manager") {
+                                                        ?>
+                                                        <a href="<?php echo SITEURL; ?>admin/update-admin.php?id=<?php echo $id; ?>" class="btn-secondary">Update Admin</a> 
+                                                        <?php
+                                                            if ($username == $user) {
+                                                                # code...
+                                                                echo "";
+                                                            }
+                                                            else{
+                                                                ?>
+                                                                    <a href="<?php echo SITEURL; ?>admin/delete-admin.php?id=<?php echo $id; ?>" class="btn btn-danger">Delete Admin</a>
+                                                                <?php
+
+                                                            }
+                                                        ?>
+                                                        
+                                                        <?php
+                                                    }
+                                                    
+                                                }
+
+                                            ?>
+                                            
                                             
                                         </td>
                                     </tr>

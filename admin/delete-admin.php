@@ -1,5 +1,6 @@
 <?php
     include('../config/configration.php');
+    include('partials/login_check.php');
 
     $id = $_GET['id'];
 

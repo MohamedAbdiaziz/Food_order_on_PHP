@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td>Add Image:</td>
-                    <td><input type="file" name="images" accept="Image"></td>
+                    <td><input type="file"  name="images"></td>
                 </tr>
                 <tr>
                     <td>feature:</td>
@@ -65,7 +65,7 @@
         if (isset($_FILES['images']['name'])) {
             $image_name = $_FILES['images']['name'];
             $ext = end(explode('.', $image_name));
-            $image_name = "Food_Category_".rand(000,999).'.'.$ext;
+            $image_name = "Food_".$title."_".rand(000,999).'.'.$ext;
             $image_path = $_FILES['images']['tmp_name'];
             
             $destination_path = '../images/category/'.$image_name;

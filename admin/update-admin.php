@@ -19,6 +19,7 @@
                             $id =$rows['ID'];
                             $full_name = $rows['Full_name'];
                             $username = $rows['Username'];
+                            $role= $rows['Role'];
                         }
                     }
                     else{
@@ -43,6 +44,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Role</td>
+                        <td>
+                            <input type="radio" <?php if($role == "Employee"){echo "checked";} ?> name="role" value="Employee">Employee
+                            <input type="radio" name="role" <?php if($role == "Manager"){echo "checked";} ?> value="Manager">Administrator
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2"> 
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" value="Update Admin" name="submit" class="btn-secondary">
@@ -58,10 +66,12 @@
         $id = $_POST['id'];
         $full_name = $_POST['Full_Name'];
         $username = $_POST['Username'];
+        $Role = $_POST['role'];
 
         $sql = "UPDATE tbl_admin SET 
             Full_name = '$full_name',
-            Username = '$username'
+            Username = '$username',
+            Role = '$Role'
             WHERE ID = '$id'
             ";
         $res = mysqli_query($conn, $sql);

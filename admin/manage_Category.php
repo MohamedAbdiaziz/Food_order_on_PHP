@@ -19,25 +19,17 @@
                 echo $_SESSION['delete-category'];
                 unset ($_SESSION['delete-category']);
             }
-        ?>
-        <br><br><?php
-            if (isset($_SESSION['add_category'])) {
-                echo $_SESSION['add_category'];
-                unset ($_SESSION['add_category']);
+            if (isset($_SESSION['first_add_category'])) {
+                echo $_SESSION['first_add_category'];
+                unset ($_SESSION['first_add_category']);
             }
-             if (isset($_SESSION['noget'])) {
-                echo $_SESSION['noget'];
-                unset ($_SESSION['noget']);
-            }
-             if (isset($_SESSION['queryfailed'])) {
-                echo $_SESSION['queryfailed'];
-                unset ($_SESSION['queryfailed']);
-            }
-            if (isset($_SESSION['delete-category'])) {
-                echo $_SESSION['delete-category'];
-                unset ($_SESSION['delete-category']);
+            if (isset($_SESSION['updated_order'])) {
+                echo $_SESSION['updated_order'];
+                unset($_SESSION['updated_order']);
             }
         ?>
+        <br><br>
+
            
             <a href="<?php echo SITEURL; ?>admin/add-category.php" class="btn-primary">Add Category</a>
             <br><br>
@@ -87,7 +79,7 @@
                                         <td><?php echo $featured; ?></td>
                                         <td> <?php echo $active; ?> </td>
                                         <td>
-                                            <a href="#" class="btn-secondary">Update Admin</a> 
+                                            <a href="<?php echo SITEURL ?>admin/update_category.php?id=<?php echo $id;?>" class="btn-secondary">Update Admin</a> 
                                             <a href="<?php echo SITEURL ?>admin/delete-category.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Admin</a> 
                                             
                                         </td>
@@ -100,7 +92,7 @@
                         else{
                             ?>
                             <tr>
-                                <td colspan="6" class="error">no category found!!!!</td>
+                                <td colspan="9" class="error text-center">no category found!!!!</td>
                             </tr>
                             <?php
                         }

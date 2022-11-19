@@ -1,5 +1,6 @@
 <?php 
 	include '../config/configration.php';
+	include('partials/login_check.php');
 
 	if (isset($_GET['id']) & isset($_GET['image'])) {
 		// code...
