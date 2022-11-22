@@ -62,11 +62,21 @@
 </div>
 
 <?php 
+
+    $user = $_SESSION['user'];
+    $title_action = "Updated Admin";
+    date_default_timezone_set('Africa/Mogadishu');
+    $date = date('y-m-d H:i:s');
+    
+
+
     if(isset($_POST['submit'])){
         $id = $_POST['id'];
         $full_name = $_POST['Full_Name'];
         $username = $_POST['Username'];
         $Role = $_POST['role'];
+
+        $Description = "Updated[ID]=$id where username updated to $username, Full name updated to $full_name and Role updated to $Role the date was $date.";  
 
         $sql = "UPDATE tbl_admin SET 
             Full_name = '$full_name',
@@ -79,6 +89,14 @@
             $div = "<div class='success'>";
             $cdiv = "</div>";
             $_SESSION['update'] = "$div Admin Deleted $cdiv";
+
+            $sql1 = "INSERT into tbl_admin_report_update_and_delete_and_add set 
+            Action_Title = '$title_action',
+            Date = '$date',
+            Action_user = '$user',
+            Description_action = '$Description'";
+            $result = mysqli_query($conn, $sql1);
+
             header('location:'.SITEURL.'admin/manage_admin.php');
         }
         else{

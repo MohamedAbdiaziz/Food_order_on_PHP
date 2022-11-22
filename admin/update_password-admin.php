@@ -20,9 +20,18 @@
         <?php 
             if(isset($_POST['submit'])){
                 $id = $id;
+
+                $user = $_SESSION['user'];
+                $title_action = "Password Changed Admin";
+                date_default_timezone_set('Africa/Mogadishu');
+                $date = date('y-m-d H:i:s');
+
                 $old_password = md5($_POST['old_password']);
                 $new_password = md5($_POST['new_password']);
                 $confirm_password = md5($_POST['confirm_password']);
+                $cf = $_POST['confirm_password'];
+                
+                $Description = "Changed the password of ID $id to $cf the date was $date";
                 
                 $sql = "SELECT * FROM tbl_admin WHERE ID = '$id'";
                 $res = mysqli_query($conn, $sql);
@@ -35,6 +44,14 @@
                             $div = "<div class='success'>";
                             $cdiv = "</div>";
                             $_SESSION['change-password'] = "$div Password Changed $cdiv";
+                            
+                            $sql1 = "INSERT into tbl_admin_report_update_and_delete_and_add set 
+                            Action_Title = '$title_action',
+                            Date = '$date',
+                            Action_user = '$user',
+                            Description_action = '$Description'";
+                            $result = mysqli_query($conn, $sql1);
+            
                             header('location:'.SITEURL.'admin/manage_admin.php');
                         }
                         else{

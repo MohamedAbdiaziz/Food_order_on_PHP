@@ -52,20 +52,27 @@
 
 <?php 
 
+$user = $_SESSION['user'];
+$title_action = "Added Admin";
+date_default_timezone_set('Africa/Mogadishu');
+$date = date('y-m-d H:i:s');
+
+
 if (isset($_POST['submit'])) {
     $Full_Name = $_POST['Full_Name'];
-    $Username = $_POST['Username'];
+    $USERNAME = $_POST['Username'];
+    $Description = "Added by New User called $USERNAME the date was $date";
     $role = $_POST['role'];
     $Password = md5 ($_POST['Password']);
 
-    $sql2 = "SELECT Username FROM tbl_admin Where Username = '$Username'";
+    $sql2 = "SELECT Username FROM tbl_admin Where Username = '$USERNAME'";
     $result = mysqli_query($conn, $sql2);
     $rows = mysqli_fetch_assoc($result);
     $taken = $rows['Username'];
-    if ($taken != $Username) {
+    if ($taken != $USERNAME) {
         $sql = "INSERT INTO tbl_admin SET 
         Full_Name='$Full_Name', 
-        Username='$Username', 
+        Username='$USERNAME', 
         Password='$Password',
         Role = '$role'";
         
@@ -74,6 +81,14 @@ if (isset($_POST['submit'])) {
             # code...
             // echo "Data inserted";
             $_SESSION['add'] = "Admin Added Successfully";
+
+            $sql1 = "INSERT into tbl_admin_report_update_and_delete_and_add set 
+            Action_Title = '$title_action',
+            Date = '$date',
+            Action_user = '$user',
+            Description_action = '$Description'";
+            $result = mysqli_query($conn, $sql1);
+
             header("location:".SITEURL.'admin/manage_admin.php');
         }
         else{
@@ -83,7 +98,7 @@ if (isset($_POST['submit'])) {
         }
     }
     else{
-        $_SESSION['add'] = "<div class='error'>Sorry!!. This <a href='#'>@$Username</a> Username Already Taken!!!</div>";
+        $_SESSION['add'] = "<div class='error'>Sorry!!. This <a href='#'>@$USERNAME</a> Username Already Taken!!!</div>";
         header("location:".SITEURL.'admin/add-admin.php');
     }
 
